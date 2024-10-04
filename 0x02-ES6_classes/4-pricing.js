@@ -2,33 +2,38 @@ import Currency from "./3-currency";
 
 export default class Pricing {
   constructor(amount, currency) {
-    this.amount = amount;
-    this.currency = currency;
+    // Create objects
+    this._amount = amount;
+    this._currency = currency;
   }
 
-  // amount
-  get amount() {
-    return this._amount;
-  }
-
-  set amount(value) {
-    this._amount = value;
-  }
-
-  // currency
-  get currency() {
-    return this._currency;
-  }
-
-  set currency(value) {
-    this._currency = value;
-  }
+  // Methods
 
   displayFullPrice() {
-    return `${this.amount} ${this.currency.displayFullCurrency()}`;
+    return `${this.amount} ${this.currency.name} (${this.currency.code})`;
   }
 
   static convertPrice(amount, conversionRate) {
     return amount * conversionRate;
+  }
+
+  // setters
+  set amount(newAmount) {
+    this._amount = newAmount;
+  }
+
+  set currency(newCurrency) {
+    if (!(newCurrency instanceof Currency))
+      throw TypeError("currency must be an instance of Currency");
+    this._currency = newCurrency;
+  }
+
+  // getters
+  get amount() {
+    return this._amount;
+  }
+
+  get currency() {
+    return this._currency;
   }
 }
